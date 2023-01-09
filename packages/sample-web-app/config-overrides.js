@@ -1,8 +1,13 @@
 /* config-overrides.js */
-const ComponentTrackingPlugin = require("component-tracking-plugin");
+const ComponentTrackingWebpackPlugin = require('component-tracking-plugin');
 
 module.exports = function override(config, env) {
   //do stuff with the webpack config...
-  config.plugins.push(new ComponentTrackingPlugin());
+  config.plugins.push(
+    new ComponentTrackingWebpackPlugin({
+      trackingModule: 'anotation',
+      pageAnotation: 'page',
+    })
+  );
   return config;
 };
