@@ -5,7 +5,7 @@ module.exports = function override(config, env) {
   //do stuff with the webpack config...
   config.plugins.push(
     new ComponentTrackingWebpackPlugin({
-      trackingModule: 'anotation',
+      trackingModule: 'ui-toolkit',
       pageAnotation: 'page',
     })
   );

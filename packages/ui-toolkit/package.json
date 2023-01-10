@@ -11,7 +11,7 @@
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "watch": "rollup -cw",
-    "build": "rollup -c",
+    "build": "rollup -c && tsc --emitDeclarationOnly",
     "build:types": "tsc --emitDeclarationOnly"
   },
   "devDependencies": {
