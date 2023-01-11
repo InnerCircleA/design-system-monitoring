@@ -1,9 +1,10 @@
 {
   "name": "component-tracking-plugin",
-  "version": "0.0.0", 
-  "main": "./src/index.js", 
+  "version": "0.0.0",
+  "main": "./src/index.js",
   "dependencies": {
     "component-tracking-anotation": "*",
+    "estraverse": "^5.3.0",
     "webpack": "^5.75.0"
   }
 }

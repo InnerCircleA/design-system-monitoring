@@ -1,8 +1,7 @@
 const { page } = require("component-tracking-anotation");
-const { getReactElementsFromStatement } = require("./ast/react-element-expression");
+const { getReactComponentsFromAST } = require("./ast/react-element-expression");
 
 const PAGE_ANOTATION = page.name;
-
 
 class ComponentTrackingWebpackPlugin {
   constructor(options = {}) {
@@ -20,32 +19,27 @@ class ComponentTrackingWebpackPlugin {
       factory.hooks.parser
         .for("javascript/auto")
         .tap(className, (parser, options) => {
+          const importIdentifierNameMap = new Map();
 
-          const importIdentifierNameMap = new Map(); // Identifier vs Component Name
           parser.hooks.importSpecifier.tap(className, (statement, source, exportName, identifierName) => {
             if (this.libraryName === source) {
               importIdentifierNameMap.set(identifierName, exportName);
             }
           })
 
-          parser.hooks.statement.tap(className, (statement) => {
-            const result = getReactElementsFromStatement(statement);
+          parser.hooks.finish.tap(className, (ast) => {
+            const componentsOfTargetLibrary = getReactComponentsFromAST(ast)
+              .filter(component => importIdentifierNameMap.has(component.name))
+              .map(component => ({
+                ...component,
+                name: importIdentifierNameMap.get(component.name)
+              }));
 
-            if (result.length === 0) return;
-
-            // Restore component name
-            result.forEach(item => {
-              item.name = importIdentifierNameMap.get(item.name);
-            })
-
-            const currNormalModule = parser.state.module;
-            if (this.componentUsingInfoMap.has(currNormalModule)) {
-              const previous = this.componentUsingInfoMap.get(currNormalModule);
-              this.componentUsingInfoMap.set(currNormalModule, [...previous, ...result]);
-            } else {
-              this.componentUsingInfoMap.set(currNormalModule, result);
+            if (componentsOfTargetLibrary.length > 0) {
+              const currNormalModule = parser.state.module;
+              this.componentUsingInfoMap.set(currNormalModule, componentsOfTargetLibrary);
             }
-          });
+          })
         });
     });
 
