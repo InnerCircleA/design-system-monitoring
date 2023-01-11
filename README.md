@@ -9,10 +9,13 @@
 ```text
 |-- nx.json
 |-- packages
+    |-- anotation
     |-- component-tracking-plugin
     |-- sample-web-app
     |-- ui-toolkit
 ```
+
+- `anotation`: project repo에서 사용할 anotation 함수 모음
 
 - `component-tracking-plugin`: 각 product 프로젝트들에서 컴포넌트들을 웹팩 빌드시 트레킹 하기 위한 커스텀 웹팩 플러그인입니다.
 
@@ -21,3 +24,12 @@
 - `ui-toolkit`: 여러 product 프로젝트에서 사용될 core component library 입니다. `storybook`, `rollup`
 
 추후 빌드 task 등등을 구성할 예정입니다.
+
+# How to build
+
+```bash
+$ cd .
+$ yarn install
+$ npx nx build sample-web-app // all dependency projects will be build. 
+```
+

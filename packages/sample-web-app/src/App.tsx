@@ -1,5 +1,5 @@
 import React from 'react';
-import { page } from 'anotation';
+import { page } from 'component-tracking-anotation';
 import { Button } from 'ui-toolkit';
 
 page();
