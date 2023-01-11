@@ -1,1 +1,3 @@
-export function page() {}
+function page() { }
+
+module.exports = { page }

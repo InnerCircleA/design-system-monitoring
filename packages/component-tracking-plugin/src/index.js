@@ -1,8 +1,13 @@
+const { page } = require("component-tracking-anotation");
+
+const PAGE_ANOTATION = page.name;
+
 class ComponentTrackingWebpackPlugin {
   constructor(options = {}) {
-    this.trackingModule = options.trackingModule;
-    this.pageAnotation = options.pageAnotation;
+    this.libraryName = options.libraryName ?? 'ui-toolkit'; // TODO: find better way
 
+    console.log("libraryName:", this.libraryName);
+    console.log("pageAnotation:", PAGE_ANOTATION);
     // TODO: 각 Compilation 과정 사이에 공유되야할 정보를 담는 곳
 
   }
@@ -37,4 +42,4 @@ class ComponentTrackingWebpackPlugin {
   }
 }
 
-export default ComponentTrackingWebpackPlugin;
+module.exports = ComponentTrackingWebpackPlugin;
