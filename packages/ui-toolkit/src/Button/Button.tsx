@@ -1,6 +1,9 @@
 import React, { PropsWithChildren } from 'react';
 
-const Button: React.FC<PropsWithChildren> = ({children}) => {
+type Props = {
+    theme?: "primary" | "secondary"
+}
+const Button: React.FC<PropsWithChildren<Props>> = ({ children, theme = "primary" }) => {
     return <button>{children}</button>
 }
 
