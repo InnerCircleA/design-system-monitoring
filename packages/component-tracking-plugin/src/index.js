@@ -1,7 +1,10 @@
-const { page } = require("component-tracking-anotation");
-const { getReactComponentsFromAST } = require("./ast/react-element-expression");
 
-const PAGE_ANOTATION = page.name;
+const { getReactComponentsFromAST } = require("./ast/react-element-expression");
+const { checkPageModuleFromStatement } = require("./ast/page-anotation-expression");
+const { traverseModuleGraph } = require("./module-graph");
+
+const path = require("path");
+const fs = require("fs");
 
 class ComponentTrackingWebpackPlugin {
   constructor(options = {}) {
@@ -25,9 +28,25 @@ class ComponentTrackingWebpackPlugin {
             if (this.libraryName === source) {
               importIdentifierNameMap.set(identifierName, exportName);
             }
+            // TODO: Prevent Page Alias
           })
 
+          parser.hooks.statement.tap(className, (statement) => {
+            const currentNormalModule = parser.state.module;
+            if (checkPageModuleFromStatement(statement)) {
+              const descriptionFile = currentNormalModule.resourceResolveData.descriptionFileData;
+              const pageInfo = {
+                project: `${descriptionFile.name}@${descriptionFile.version}`,
+                path: path.basename(currentNormalModule.resource),
+                updated: new Date().toISOString(),
+                components: []
+              };
+              this.pageInfoMap.set(currentNormalModule, pageInfo);
+            }
+          });
+
           parser.hooks.finish.tap(className, (ast) => {
+            const currentNormalModule = parser.state.module;
             const componentsOfTargetLibrary = getReactComponentsFromAST(ast)
               .filter(component => importIdentifierNameMap.has(component.name))
               .map(component => ({
@@ -36,8 +55,7 @@ class ComponentTrackingWebpackPlugin {
               }));
 
             if (componentsOfTargetLibrary.length > 0) {
-              const currNormalModule = parser.state.module;
-              this.componentUsingInfoMap.set(currNormalModule, componentsOfTargetLibrary);
+              this.componentUsingInfoMap.set(currentNormalModule, componentsOfTargetLibrary);
             }
           })
         });
@@ -49,15 +67,26 @@ class ComponentTrackingWebpackPlugin {
           moduleGraph: { _moduleMap: moduleMap },
         } = compilation;
 
-        // TODO: 모듈간의 그래프 관계를 이용한 데이터 연결         
-        for (const [normalModule, componentInfos] of this.componentUsingInfoMap) {
-          console.log("Component: ", componentInfos);
+        for (const [pageNormalModule, pageInfo] of this.pageInfoMap) {
+          traverseModuleGraph(pageNormalModule, moduleMap, (normalModule) => {
+            if (this.componentUsingInfoMap.has(normalModule)) {
+              const componentInfoList = this.componentUsingInfoMap.get(normalModule);
+              pageInfo.components = [...pageInfo.components, ...componentInfoList]
+            }
+          })
         }
       });
     });
 
     compiler.hooks.done.tap(className, () => {
-      // TODO: 수집된 정보를 외부로 추출
+      const result = JSON.stringify(Array.from(this.pageInfoMap.values()));
+
+      fs.writeFile("tracking.json", result, (err) => {
+        if (err) console.log(err);
+        else {
+          console.log("Generate tracking.json\n");
+        }
+      });
     });
   }
 }

@@ -6,7 +6,7 @@ const estraverse = require("estraverse");
  * @param {*} expression 검증할 AST Expression 객체
  * @returns {boolean} 
  */
-const isJSXCallExpression = (expression) => expression.type === "CallExpression"
+const checkJSXCallExpression = (expression) => expression.type === "CallExpression"
     && expression.callee?.type === "Identifier"
     && expression.callee.name === "_jsx";
 
@@ -20,7 +20,7 @@ function getReactComponentsFromAST(ast) {
 
     estraverse.traverse(ast, {
         enter: function (node, parent) {
-            if (!isJSXCallExpression(node)) return;
+            if (!checkJSXCallExpression(node)) return;
 
             const jsxCallExpression = node;
             const args = jsxCallExpression.arguments;

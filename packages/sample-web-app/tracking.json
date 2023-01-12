@@ -1,0 +1,21 @@
+[
+    {
+        "project": "sample-web-app@0.1.0",
+        "path": "App.tsx",
+        "updated": "2023-01-12T05:46:50.787Z",
+        "components": [
+            {
+                "name": "Button",
+                "props": {
+                    "theme": "secondary"
+                }
+            },
+            {
+                "name": "Button",
+                "props": {
+                    "theme": "primary"
+                }
+            }
+        ]
+    }
+]
