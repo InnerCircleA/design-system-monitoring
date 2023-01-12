@@ -21,9 +21,11 @@ class ComponentTrackingWebpackPlugin {
       factory.hooks.parser
         .for("javascript/auto")
         .tap(className, (parser, options) => {
+
           const importIdentifierNameMap = new Map();
 
           parser.hooks.importSpecifier.tap(className, (statement, source, exportName, identifierName) => {
+
             if (this.libraryName === source) {
               importIdentifierNameMap.set(identifierName, exportName);
             }
@@ -32,15 +34,16 @@ class ComponentTrackingWebpackPlugin {
 
           parser.hooks.statement.tap(className, (statement) => {
             const currentNormalModule = parser.state.module;
+
             if (checkPageModuleFromStatement(statement)) {
               const descriptionFile = currentNormalModule.resourceResolveData.descriptionFileData;
-              const pageInfo = {
+
+              this.pageInfoMap.set(currentNormalModule, {
                 project: `${descriptionFile.name}@${descriptionFile.version}`,
                 path: path.basename(currentNormalModule.resource),
                 updated: new Date().toISOString(),
                 components: []
-              };
-              this.pageInfoMap.set(currentNormalModule, pageInfo);
+              });
             }
           });
 
