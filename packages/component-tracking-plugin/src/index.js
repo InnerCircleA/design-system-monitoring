@@ -51,7 +51,8 @@ class ComponentTrackingWebpackPlugin {
               .filter(component => importIdentifierNameMap.has(component.name))
               .map(component => ({
                 ...component,
-                name: importIdentifierNameMap.get(component.name)
+                name: importIdentifierNameMap.get(component.name),
+                alias: component.name
               }));
 
             if (componentsOfTargetLibrary.length > 0) {
@@ -68,11 +69,23 @@ class ComponentTrackingWebpackPlugin {
         } = compilation;
 
         for (const [pageNormalModule, pageInfo] of this.pageInfoMap) {
-          traverseModuleGraph(pageNormalModule, moduleMap, (normalModule) => {
-            if (this.componentUsingInfoMap.has(normalModule)) {
-              const componentInfoList = this.componentUsingInfoMap.get(normalModule);
-              pageInfo.components = [...pageInfo.components, ...componentInfoList]
-            }
+          traverseModuleGraph(pageNormalModule, moduleMap, (normalModule, graphModule) => {
+            if (!this.componentUsingInfoMap.has(normalModule)) return;
+            const componentUsingInfoList = this.componentUsingInfoMap.get(normalModule);
+
+            Array.from(graphModule.outgoingConnections || []).forEach((connection) => {
+              componentUsingInfoList.forEach(componentUsingInfo => {
+                if (componentUsingInfo.alias === connection.dependency.name
+                  && connection.dependency.request === this.libraryName) {
+                  // Update package.json data of component
+                  const description = connection.module.resourceResolveData.descriptionFileData
+                  componentUsingInfo.library = description.name;
+                  componentUsingInfo.version = description.version;
+                }
+              })
+            });
+
+            pageInfo.components = [...pageInfo.components, ...componentUsingInfoList];
           })
         }
       });

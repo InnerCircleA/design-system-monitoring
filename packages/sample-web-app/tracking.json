@@ -2,19 +2,25 @@
     {
         "project": "sample-web-app@0.1.0",
         "path": "App.tsx",
-        "updated": "2023-01-12T05:46:50.787Z",
+        "updated": "2023-01-12T06:41:12.393Z",
         "components": [
             {
                 "name": "Button",
                 "props": {
                     "theme": "secondary"
-                }
+                },
+                "alias": "CustomButton",
+                "library": "ui-toolkit",
+                "version": "0.0.0"
             },
             {
                 "name": "Button",
                 "props": {
                     "theme": "primary"
-                }
+                },
+                "alias": "CustomButton",
+                "library": "ui-toolkit",
+                "version": "0.0.0"
             }
         ]
     }
