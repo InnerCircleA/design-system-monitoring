@@ -40,7 +40,6 @@ function getReactComponentsFromAST(ast) {
                     const key = property.key.name;
                     let value = undefined;
 
-                    if (key === "children") continue;
                     if (property.value.type === "Literal") {
                         value = property.value.value;
                     } else if (property.value.type === "Identifier") {

@@ -8,10 +8,9 @@ const fs = require("fs");
 
 class ComponentTrackingWebpackPlugin {
   constructor(options = {}) {
-    this.libraryName = options.libraryName ?? 'ui-toolkit'; // TODO: find better way
+    this.libraryName = options.libraryName ?? 'ui-toolkit'; // TODO: 더 좋은 방식을 고민해야함.
 
-    // TODO: 각 Compilation 과정 사이에 공유되야할 정보를 담는 곳
-    this.componentUsingInfoMap = new Map();
+    this.usedComponentInfoMap = new Map();
     this.pageInfoMap = new Map();
   }
 
@@ -47,16 +46,18 @@ class ComponentTrackingWebpackPlugin {
 
           parser.hooks.finish.tap(className, (ast) => {
             const currentNormalModule = parser.state.module;
-            const componentsOfTargetLibrary = getReactComponentsFromAST(ast)
+            const usedComponentInfos = getReactComponentsFromAST(ast)
               .filter(component => importIdentifierNameMap.has(component.name))
               .map(component => ({
                 ...component,
                 name: importIdentifierNameMap.get(component.name),
-                alias: component.name
+                alias: component.name,
+                library: "", // will update after module dependency is resolved 
+                version: ""
               }));
 
-            if (componentsOfTargetLibrary.length > 0) {
-              this.componentUsingInfoMap.set(currentNormalModule, componentsOfTargetLibrary);
+            if (usedComponentInfos.length > 0) {
+              this.usedComponentInfoMap.set(currentNormalModule, usedComponentInfos);
             }
           })
         });
@@ -70,22 +71,22 @@ class ComponentTrackingWebpackPlugin {
 
         for (const [pageNormalModule, pageInfo] of this.pageInfoMap) {
           traverseModuleGraph(pageNormalModule, moduleMap, (normalModule, graphModule) => {
-            if (!this.componentUsingInfoMap.has(normalModule)) return;
-            const componentUsingInfoList = this.componentUsingInfoMap.get(normalModule);
+            if (!this.usedComponentInfoMap.has(normalModule)) return;
+            const usedComponentInfoList = this.usedComponentInfoMap.get(normalModule);
 
             Array.from(graphModule.outgoingConnections || []).forEach((connection) => {
-              componentUsingInfoList.forEach(componentUsingInfo => {
-                if (componentUsingInfo.alias === connection.dependency.name
+              usedComponentInfoList.forEach(usedComponentInfo => {
+                if (usedComponentInfo.alias === connection.dependency.name
                   && connection.dependency.request === this.libraryName) {
                   // Update package.json data of component
-                  const description = connection.module.resourceResolveData.descriptionFileData
-                  componentUsingInfo.library = description.name;
-                  componentUsingInfo.version = description.version;
+                  const descriptionData = connection.module.resourceResolveData.descriptionFileData
+                  usedComponentInfo.library = descriptionData.name;
+                  usedComponentInfo.version = descriptionData.version;
                 }
               })
             });
 
-            pageInfo.components = [...pageInfo.components, ...componentUsingInfoList];
+            pageInfo.components = [...pageInfo.components, ...usedComponentInfoList];
           })
         }
       });

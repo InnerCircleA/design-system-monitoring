@@ -12,3 +12,78 @@ function App() {
   return _jsx('h1', { children: 'Hello world' });
 }
 ```
+
+# How to use
+
+1. Webpack Plugin으로 `ComponentTrackingWebpackPlugin`을 추가
+
+```javascript
+const ComponentTrackingWebpackPlugin = require('component-tracking-plugin');
+
+module.exports = { 
+    //...
+    plugins: [
+        new ComponentTrackingWebpackPlugin({
+            libraryName: 'ui-toolkit',
+        })
+    ], 
+} 
+```
+
+2. React Project 에서 `page()` anotation으로 페이지 모듈임을 표시 후, Tracking할 library의 컴포넌트를 JSX형태로 사용 
+
+```jsx
+import React from 'react';
+import { page } from 'component-tracking-anotation';
+import { Button as CustomButton } from 'ui-toolkit';
+
+page(); // 해당 모듈은 페이지 모듈
+
+const App: React.FC = () => {
+  const test = () => <CustomButton theme="secondary">TEST</CustomButton>;
+
+  return (
+    <div>
+      <CustomButton theme="primary">TEST</CustomButton>
+      {test()}
+    </div>
+  );
+};
+
+export default App;
+```
+
+3. 해당 프로젝트를 Webpack으로 Build할 경우, 아래와 같은 `tracking.json`의 결과를 얻을 수 있습니다.
+
+- `tracking.json`
+```json
+[
+    {
+        "project": "sample-web-app@0.1.0",
+        "path": "App.tsx",
+        "updated": "2023-01-12T07:01:49.791Z",
+        "components": [
+            {
+                "name": "Button",
+                "props": {
+                    "theme": "secondary",
+                    "children": "TEST"
+                },
+                "alias": "CustomButton",
+                "library": "ui-toolkit",
+                "version": "0.0.0"
+            },
+            {
+                "name": "Button",
+                "props": {
+                    "theme": "primary",
+                    "children": "TEST"
+                },
+                "alias": "CustomButton",
+                "library": "ui-toolkit",
+                "version": "0.0.0"
+            }
+        ]
+    }
+]
+```

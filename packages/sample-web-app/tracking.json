@@ -2,12 +2,13 @@
     {
         "project": "sample-web-app@0.1.0",
         "path": "App.tsx",
-        "updated": "2023-01-12T06:41:12.393Z",
+        "updated": "2023-01-12T07:01:49.791Z",
         "components": [
             {
                 "name": "Button",
                 "props": {
-                    "theme": "secondary"
+                    "theme": "secondary",
+                    "children": "TEST"
                 },
                 "alias": "CustomButton",
                 "library": "ui-toolkit",
@@ -16,7 +17,8 @@
             {
                 "name": "Button",
                 "props": {
-                    "theme": "primary"
+                    "theme": "primary",
+                    "children": "TEST"
                 },
                 "alias": "CustomButton",
                 "library": "ui-toolkit",
