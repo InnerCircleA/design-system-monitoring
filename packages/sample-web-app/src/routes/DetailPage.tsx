@@ -3,6 +3,7 @@ import { WebviewLayout } from "../components/layout/WebviewContainer";
 import { Button } from "ui-toolkit";
 import styled from "@emotion/styled";
 import { useNavigate } from "react-router-dom";
+import { CustomButton } from "../components/CustomButton";
 
 page();
 const DetailPage = () => {
@@ -20,6 +21,8 @@ const DetailPage = () => {
                 <li>Home Button with "theme: primary"</li>
                 <li>Back Button with "theme: secondary"</li>
             </p>
+            <p>Below Custom Button</p>
+            <CustomButton>Custom</CustomButton>
         </ContentContainer>
         <BottomButtonGroup>
             <Button theme={"secondary"} onClick={handleClickBackButton}>Back</Button>

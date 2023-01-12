@@ -1,1 +1,59 @@
-[{"project":"sample-web-app@0.1.0","path":"MainPage.tsx","updated":"2023-01-12T12:06:53.517Z","components":[{"name":"Button","props":{"theme":"primary","children":"Home"},"alias":"Button","library":"ui-toolkit","version":"0.0.0"},{"name":"Button","props":{"theme":"secondary","children":"Detail"},"alias":"Button","library":"ui-toolkit","version":"0.0.0"}]}]
+[
+    {
+        "project": "sample-web-app@0.1.0",
+        "path": "MainPage.tsx",
+        "updated": "2023-01-12T12:40:14.866Z",
+        "components": [
+            {
+                "name": "Button",
+                "props": {
+                    "theme": "primary",
+                    "onClick": "handleClickDetailButton",
+                    "children": "Detail"
+                },
+                "alias": "Button",
+                "library": "ui-toolkit",
+                "version": "0.0.0"
+            }
+        ]
+    },
+    {
+        "project": "sample-web-app@0.1.0",
+        "path": "DetailPage.tsx",
+        "updated": "2023-01-12T12:40:14.868Z",
+        "components": [
+            {
+                "name": "Button",
+                "props": {
+                    "theme": "secondary",
+                    "onClick": "handleClickBackButton",
+                    "children": "Back"
+                },
+                "alias": "Button",
+                "library": "ui-toolkit",
+                "version": "0.0.0"
+            },
+            {
+                "name": "Button",
+                "props": {
+                    "theme": "primary",
+                    "onClick": "handleClickHomeButton",
+                    "children": "Home"
+                },
+                "alias": "Button",
+                "library": "ui-toolkit",
+                "version": "0.0.0"
+            },
+            {
+                "name": "Button",
+                "props": {
+                    "style": "{ background: 'blue' }",
+                    "children": "children"
+                },
+                "alias": "Button",
+                "library": "ui-toolkit",
+                "version": "0.0.0"
+            }
+        ]
+    }
+]

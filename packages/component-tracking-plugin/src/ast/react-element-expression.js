@@ -1,6 +1,6 @@
 
 const estraverse = require("estraverse");
-
+const escodegen = require("escodegen");
 /**
  * AST Expression 이 React Element를 생성하는 함수 호출인지 확인해주는 Util 함수 
  * @param {*} expression 검증할 AST Expression 객체
@@ -43,7 +43,9 @@ function getReactComponentsFromAST(ast) {
                     if (property.value.type === "Literal") {
                         value = property.value.value;
                     } else if (property.value.type === "Identifier") {
-                        value = property.value.name; // TODO: 변수로 사용될 경우. 변수 이름만 처리할 수 있음.
+                        value = escodegen.generate(property.value); // TODO: Need to replace 
+                    } else if (property.value.type === "ObjectExpression") {
+                        value = escodegen.generate(property.value);
                     }
                     componentProps[key] = value;
                 }
