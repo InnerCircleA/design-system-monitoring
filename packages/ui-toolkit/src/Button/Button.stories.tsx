@@ -6,4 +6,6 @@ export default {
     component: Button
 }
 
-export const defaultButton = () => <Button>Button</Button>
+export const primaryButton = () => <Button theme="primary">Button</Button>;
+
+export const secondaryButton = () => <Button theme="secondary">Button</Button>;

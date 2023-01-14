@@ -22,13 +22,6 @@ module.exports = {
     },
   },
   webpackFinal: async (config) => {
-    // configure for absolute imports
-    config.resolve.plugins = [
-      ...(config.resolve.plugins || []),
-      new TsconfigPathsPlugin({
-        extensions: config.resolve.extensions,
-      }),
-    ];
 
     // disable whatever is already set to load SVGs
     config.module.rules
