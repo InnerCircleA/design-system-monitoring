@@ -2,13 +2,16 @@
     {
         "project": "sample-web-app@0.1.0",
         "path": "MainPage.tsx",
-        "updated": "2023-01-12T12:40:14.866Z",
+        "updated": "2023-01-14T12:43:03.957Z",
         "components": [
             {
                 "name": "Button",
                 "props": {
                     "theme": "primary",
-                    "onClick": "handleClickDetailButton",
+                    "onClick": {
+                        "type": "Identifier",
+                        "value": "handleClickDetailButton"
+                    },
                     "children": "Detail"
                 },
                 "alias": "Button",
@@ -20,13 +23,16 @@
     {
         "project": "sample-web-app@0.1.0",
         "path": "DetailPage.tsx",
-        "updated": "2023-01-12T12:40:14.868Z",
+        "updated": "2023-01-14T12:43:03.960Z",
         "components": [
             {
                 "name": "Button",
                 "props": {
                     "theme": "secondary",
-                    "onClick": "handleClickBackButton",
+                    "onClick": {
+                        "type": "Identifier",
+                        "value": "handleClickBackButton"
+                    },
                     "children": "Back"
                 },
                 "alias": "Button",
@@ -37,7 +43,10 @@
                 "name": "Button",
                 "props": {
                     "theme": "primary",
-                    "onClick": "handleClickHomeButton",
+                    "onClick": {
+                        "type": "Identifier",
+                        "value": "handleClickHomeButton"
+                    },
                     "children": "Home"
                 },
                 "alias": "Button",
@@ -47,8 +56,14 @@
             {
                 "name": "Button",
                 "props": {
-                    "style": "{ background: 'blue' }",
-                    "children": "children"
+                    "style": {
+                        "type": "ObjectExpression",
+                        "value": "{ background: 'blue' }"
+                    },
+                    "children": {
+                        "type": "Identifier",
+                        "value": "children"
+                    }
                 },
                 "alias": "Button",
                 "library": "ui-toolkit",

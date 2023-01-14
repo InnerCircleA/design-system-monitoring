@@ -42,10 +42,11 @@ function getReactComponentsFromAST(ast) {
 
                     if (property.value.type === "Literal") {
                         value = property.value.value;
-                    } else if (property.value.type === "Identifier") {
-                        value = escodegen.generate(property.value); // TODO: Need to replace 
-                    } else if (property.value.type === "ObjectExpression") {
-                        value = escodegen.generate(property.value);
+                    } else if (property.value.type === "Identifier" || property.value.type === "ObjectExpression") {
+                        value = {
+                            type: property.value.type,
+                            value: escodegen.generate(property.value) // TODO: Need to replace 
+                        }
                     }
                     componentProps[key] = value;
                 }
