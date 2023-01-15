@@ -11,6 +11,11 @@
   "dependencies": {
     "next": "^13.1.2",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "ui-toolkit": "*",
+    "component-tracking-anotation": "*"
+  },
+  "devDependencies": {
+    "component-tracking-plugin": "*"
   }
 }
