@@ -1,7 +1,7 @@
 const estraverse = require('estraverse');
 const escodegen = require('escodegen');
 /**
- * AST Expression 이 React Element를 생성하는 함수 호출인지 확인해주는 Util 함수
+ * AST Expression 이 React Element를 생성하는 함수 호출인지 확인하는 Util 함수
  * @param {*} expression 검증할 AST Expression 객체
  * @returns {boolean}
  */
@@ -9,6 +9,16 @@ const checkJSXCallExpression = (expression) =>
   expression.type === 'CallExpression' &&
   expression.callee?.type === 'Identifier' &&
   (expression.callee.name === '_jsx' || expression.callee.name === '_jsxDEV'); // TODO: divide parsing for DEV mode
+
+/**
+ * React Props Expression 이 Spread Syntax로 할당됐는지 확인하는 Util 함수
+ * @param {*} expression JSX 호출함수의 props argument
+ * @returns
+ */
+const checkSpreadSyntaxProps = (expression) =>
+  expression?.type === 'CallExpression' &&
+  expression.callee.type === 'Identifier' &&
+  expression.callee.name === '_objectSpread'; // spread syntax is converted by webpack babel
 
 /**
  * AST 분석을 통해 React Element를 생성하는 함수 CallExpression을 모두 찾아서 호출 정보 반환
@@ -27,37 +37,44 @@ function getReactComponentsFromAST(ast) {
       if (args === undefined || args.length === 0) return;
 
       const elementType = args[0];
-      const propsObjExpression = args[1];
 
-      // when type is "Identifier", React Component
+      let propsArg = args[1];
+      let propsObjExpression = undefined;
+      let spread = false;
+
+      if (checkSpreadSyntaxProps(propsArg)) {
+        spread = true; // TODO: Get detail spread informations
+        propsObjExpression =
+          propsArg.arguments.length > 2 ? propsArg.arguments[2] : undefined;
+      } else {
+        propsObjExpression = propsArg;
+      }
+
+      // if type is "Identifier", React Component
+      // else DOM Element
       if (elementType.type !== 'Identifier') return;
 
       const componentName = elementType.name;
       const componentProps = {};
-      let spread = false;
 
       if (args.length > 1) {
         for (const property of propsObjExpression.properties) {
-          if (property.type === 'Property') {
-            const key = property.key.name;
-            let value = undefined;
+          if (property.type !== 'Property') continue;
+          const key = property.key.name;
+          let value = undefined;
 
-            if (property.value.type === 'Literal') {
-              value = property.value.value;
-            } else if (
-              property.value.type === 'Identifier' ||
-              property.value.type === 'ObjectExpression'
-            ) {
-              value = {
-                type: property.value.type,
-                value: escodegen.generate(property.value),
-              };
-            }
-            componentProps[key] = value;
-          } else if (property.type === 'SpreadElement') {
-            // when use spread assign
-            if (!spread) spread = true;
+          if (property.value.type === 'Literal') {
+            value = property.value.value;
+          } else if (
+            property.value.type === 'Identifier' ||
+            property.value.type === 'ObjectExpression'
+          ) {
+            value = {
+              type: property.value.type,
+              value: escodegen.generate(property.value),
+            };
           }
+          componentProps[key] = value;
         }
       }
 

@@ -1,0 +1,25 @@
+[
+  {
+    "project": "sample-web@0.1.0",
+    "path": "index.tsx",
+    "updated": "2023-01-15T14:12:58.708Z",
+    "components": [
+      {
+        "name": "Button",
+        "props": { "theme": "primary", "children": "Hello" },
+        "spread": false,
+        "alias": "Button",
+        "library": "ui-toolkit",
+        "version": "0.0.0"
+      },
+      {
+        "name": "Button",
+        "props": { "theme": "secondary", "children": "Hello" },
+        "spread": false,
+        "alias": "Button",
+        "library": "ui-toolkit",
+        "version": "0.0.0"
+      }
+    ]
+  }
+]

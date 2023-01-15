@@ -1,10 +1,11 @@
+const { getReactComponentsFromAST } = require('./ast/react-element-expression');
+const {
+  checkPageModuleFromStatement,
+} = require('./ast/page-anotation-expression');
+const { traverseModuleGraph } = require('./module-graph');
 
-const { getReactComponentsFromAST } = require("./ast/react-element-expression");
-const { checkPageModuleFromStatement } = require("./ast/page-anotation-expression");
-const { traverseModuleGraph } = require("./module-graph");
-
-const path = require("path");
-const fs = require("fs");
+const path = require('path');
+const fs = require('fs');
 
 class ComponentTrackingWebpackPlugin {
   constructor(options = {}) {
@@ -19,30 +20,32 @@ class ComponentTrackingWebpackPlugin {
 
     compiler.hooks.normalModuleFactory.tap(className, (factory) => {
       factory.hooks.parser
-        .for("javascript/auto")
+        .for('javascript/auto')
         .tap(className, (parser, options) => {
-
           const importIdentifierNameMap = new Map();
 
-          parser.hooks.importSpecifier.tap(className, (statement, source, exportName, identifierName) => {
-
-            if (this.libraryName === source) {
-              importIdentifierNameMap.set(identifierName, exportName);
+          parser.hooks.importSpecifier.tap(
+            className,
+            (statement, source, exportName, identifierName) => {
+              if (this.libraryName === source) {
+                importIdentifierNameMap.set(identifierName, exportName);
+              }
+              // TODO: Prevent Page Alias
             }
-            // TODO: Prevent Page Alias
-          })
+          );
 
           parser.hooks.statement.tap(className, (statement) => {
             const currentNormalModule = parser.state.module;
 
             if (checkPageModuleFromStatement(statement)) {
-              const descriptionFile = currentNormalModule.resourceResolveData.descriptionFileData;
+              const descriptionFile =
+                currentNormalModule.resourceResolveData.descriptionFileData;
 
               this.pageInfoMap.set(currentNormalModule, {
                 project: `${descriptionFile.name}@${descriptionFile.version}`,
                 path: path.basename(currentNormalModule.resource),
                 updated: new Date().toISOString(),
-                components: []
+                components: [],
               });
             }
           });
@@ -50,19 +53,24 @@ class ComponentTrackingWebpackPlugin {
           parser.hooks.finish.tap(className, (ast) => {
             const currentNormalModule = parser.state.module;
             const usedComponentInfos = getReactComponentsFromAST(ast)
-              .filter(component => importIdentifierNameMap.has(component.name))
-              .map(component => ({
+              .filter((component) =>
+                importIdentifierNameMap.has(component.name)
+              )
+              .map((component) => ({
                 ...component,
                 name: importIdentifierNameMap.get(component.name),
                 alias: component.name,
-                library: "", // will update after module dependency is resolved 
-                version: ""
+                library: '', // will update after module dependency is resolved
+                version: '',
               }));
 
             if (usedComponentInfos.length > 0) {
-              this.usedComponentInfoMap.set(currentNormalModule, usedComponentInfos);
+              this.usedComponentInfoMap.set(
+                currentNormalModule,
+                usedComponentInfos
+              );
             }
-          })
+          });
         });
     });
 
@@ -73,24 +81,38 @@ class ComponentTrackingWebpackPlugin {
         } = compilation;
 
         for (const [pageNormalModule, pageInfo] of this.pageInfoMap) {
-          traverseModuleGraph(pageNormalModule, moduleMap, (normalModule, graphModule) => {
-            if (!this.usedComponentInfoMap.has(normalModule)) return;
-            const usedComponentInfoList = this.usedComponentInfoMap.get(normalModule);
+          traverseModuleGraph(
+            pageNormalModule,
+            moduleMap,
+            (normalModule, graphModule) => {
+              if (!this.usedComponentInfoMap.has(normalModule)) return;
+              const usedComponentInfoList =
+                this.usedComponentInfoMap.get(normalModule);
 
-            Array.from(graphModule.outgoingConnections || []).forEach((connection) => {
-              usedComponentInfoList.forEach(usedComponentInfo => {
-                if (usedComponentInfo.alias === connection.dependency.name
-                  && connection.dependency.request === this.libraryName) {
-                  // Update package.json data of component
-                  const descriptionData = connection.module.resourceResolveData.descriptionFileData
-                  usedComponentInfo.library = descriptionData.name;
-                  usedComponentInfo.version = descriptionData.version;
+              Array.from(graphModule.outgoingConnections || []).forEach(
+                (connection) => {
+                  usedComponentInfoList.forEach((usedComponentInfo) => {
+                    if (
+                      usedComponentInfo.alias === connection.dependency.name &&
+                      connection.dependency.request === this.libraryName
+                    ) {
+                      // Update package.json data of component
+                      const descriptionData =
+                        connection.module.resourceResolveData
+                          .descriptionFileData;
+                      usedComponentInfo.library = descriptionData.name;
+                      usedComponentInfo.version = descriptionData.version;
+                    }
+                  });
                 }
-              })
-            });
+              );
 
-            pageInfo.components = [...pageInfo.components, ...usedComponentInfoList];
-          })
+              pageInfo.components = [
+                ...pageInfo.components,
+                ...usedComponentInfoList,
+              ];
+            }
+          );
         }
       });
     });
@@ -98,10 +120,10 @@ class ComponentTrackingWebpackPlugin {
     compiler.hooks.done.tap(className, () => {
       const result = JSON.stringify(Array.from(this.pageInfoMap.values()));
 
-      fs.writeFile("tracking.json", result, (err) => {
+      fs.writeFile('tracking.json', result, (err) => {
         if (err) console.log(err);
         else {
-          console.log("Generate tracking.json\n");
+          console.log('Generate tracking.json\n');
         }
       });
     });
