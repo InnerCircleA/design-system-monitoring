@@ -2,7 +2,7 @@
   {
     "project": "sample-web@0.1.0",
     "path": "index.tsx",
-    "updated": "2023-01-15T14:12:58.708Z",
+    "updated": "2023-01-15T15:15:07.146Z",
     "components": [
       {
         "name": "Button",
@@ -14,8 +14,23 @@
       },
       {
         "name": "Button",
-        "props": { "theme": "secondary", "children": "Hello" },
+        "props": {
+          "theme": "secondary",
+          "style": {
+            "type": "ObjectExpression",
+            "value": "{\n    background: '#ffffff',\n    fontSize: 24,\n    height: 50,\n    marginTop: 12,\n    marginBottom: 12\n}"
+          },
+          "children": "Custom Style"
+        },
         "spread": false,
+        "alias": "Button",
+        "library": "ui-toolkit",
+        "version": "0.0.0"
+      },
+      {
+        "name": "Button",
+        "props": { "children": "TEST" },
+        "spread": true,
         "alias": "Button",
         "library": "ui-toolkit",
         "version": "0.0.0"

@@ -42,8 +42,9 @@ function getReactComponentsFromAST(ast) {
       let propsObjExpression = undefined;
       let spread = false;
 
+      // TODO: Spread Syntax를 트랜스파일러의 세팅에 따라 처리방식이 달라질 수 있으므로 처리를 해줘야합니다.
       if (checkSpreadSyntaxProps(propsArg)) {
-        spread = true; // TODO: Get detail spread informations
+        spread = true;
         propsObjExpression =
           propsArg.arguments.length > 2 ? propsArg.arguments[2] : undefined;
       } else {
@@ -59,7 +60,11 @@ function getReactComponentsFromAST(ast) {
 
       if (args.length > 1) {
         for (const property of propsObjExpression.properties) {
-          if (property.type !== 'Property') continue;
+          if (property.type !== 'Property') {
+            // TODO: Spread Syntax를 트랜스파일러의 세팅에 따라 처리방식이 달라질 수 있으므로 처리를 해줘야합니다.
+            if (property.type === 'SpreadElement') spread = true;
+            continue;
+          }
           const key = property.key.name;
           let value = undefined;
 
@@ -74,6 +79,7 @@ function getReactComponentsFromAST(ast) {
               value: escodegen.generate(property.value),
             };
           }
+
           componentProps[key] = value;
         }
       }

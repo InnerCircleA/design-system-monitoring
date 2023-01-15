@@ -13,6 +13,8 @@ class ComponentTrackingWebpackPlugin {
 
     this.usedComponentInfoMap = new Map();
     this.pageInfoMap = new Map();
+
+    this.done = false;
   }
 
   apply(compiler) {
@@ -52,6 +54,7 @@ class ComponentTrackingWebpackPlugin {
 
           parser.hooks.finish.tap(className, (ast) => {
             const currentNormalModule = parser.state.module;
+
             const usedComponentInfos = getReactComponentsFromAST(ast)
               .filter((component) =>
                 importIdentifierNameMap.has(component.name)
@@ -118,8 +121,8 @@ class ComponentTrackingWebpackPlugin {
     });
 
     compiler.hooks.done.tap(className, () => {
+      if (!this.done) return;
       const result = JSON.stringify(Array.from(this.pageInfoMap.values()));
-
       fs.writeFile('tracking.json', result, (err) => {
         if (err) console.log(err);
         else {

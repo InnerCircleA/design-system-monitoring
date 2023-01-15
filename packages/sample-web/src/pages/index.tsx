@@ -4,6 +4,7 @@ import { Button } from 'ui-toolkit';
 page();
 
 export default function Home() {
+  const buttonProps = { style: { background: '#ff0000' } };
   return (
     <>
       <Head>
@@ -15,7 +16,19 @@ export default function Home() {
       <main>
         <h1>Main Web Page</h1>
         <Button theme="primary">Hello</Button>
-        <Button theme="secondary">Hello</Button>
+        <Button
+          theme="secondary"
+          style={{
+            background: '#ffffff',
+            fontSize: 24,
+            height: 50,
+            marginTop: 12,
+            marginBottom: 12,
+          }}
+        >
+          Custom Style
+        </Button>
+        <Button {...buttonProps}>TEST</Button>
       </main>
     </>
   );
