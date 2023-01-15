@@ -122,6 +122,7 @@ class ComponentTrackingWebpackPlugin {
 
     compiler.hooks.done.tap(className, () => {
       if (!this.done) return;
+
       const result = JSON.stringify(Array.from(this.pageInfoMap.values()));
       fs.writeFile('tracking.json', result, (err) => {
         if (err) console.log(err);

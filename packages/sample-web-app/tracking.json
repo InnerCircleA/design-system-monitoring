@@ -1,1 +1,77 @@
-[{"project":"sample-web-app@0.1.0","path":"MainPage.tsx","updated":"2023-01-15T14:35:07.686Z","components":[{"name":"Button","props":{"theme":"primary","onClick":{"type":"Identifier","value":"handleClickDetailButton"},"children":"Detail"},"spread":false,"alias":"Button","library":"ui-toolkit","version":"0.0.0"}]},{"project":"sample-web-app@0.1.0","path":"DetailPage.tsx","updated":"2023-01-15T14:35:07.690Z","components":[{"name":"Button","props":{"theme":"primary","children":"Good"},"spread":true,"alias":"Button","library":"ui-toolkit","version":"0.0.0"},{"name":"Button","props":{"theme":"secondary","onClick":{"type":"Identifier","value":"handleClickBackButton"},"children":"Back"},"spread":false,"alias":"Button","library":"ui-toolkit","version":"0.0.0"},{"name":"Button","props":{"theme":"primary","onClick":{"type":"Identifier","value":"handleClickHomeButton"},"children":"Home"},"spread":false,"alias":"Button","library":"ui-toolkit","version":"0.0.0"},{"name":"Button","props":{"style":{"type":"ObjectExpression","value":"{ background: 'blue' }"},"children":{"type":"Identifier","value":"children"}},"spread":false,"alias":"Button","library":"ui-toolkit","version":"0.0.0"}]}]
+[
+  {
+    "project": "sample-web-app@0.1.0",
+    "path": "MainPage.tsx",
+    "updated": "2023-01-15T14:35:07.686Z",
+    "components": [
+      {
+        "name": "Button",
+        "props": {
+          "theme": "primary",
+          "onClick": {
+            "type": "Identifier",
+            "value": "handleClickDetailButton"
+          },
+          "children": "Detail"
+        },
+        "spread": false,
+        "alias": "Button",
+        "library": "ui-toolkit",
+        "version": "0.0.0"
+      }
+    ]
+  },
+  {
+    "project": "sample-web-app@0.1.0",
+    "path": "DetailPage.tsx",
+    "updated": "2023-01-15T14:35:07.690Z",
+    "components": [
+      {
+        "name": "Button",
+        "props": { "theme": "primary", "children": "Good" },
+        "spread": true,
+        "alias": "Button",
+        "library": "ui-toolkit",
+        "version": "0.0.0"
+      },
+      {
+        "name": "Button",
+        "props": {
+          "theme": "secondary",
+          "onClick": { "type": "Identifier", "value": "handleClickBackButton" },
+          "children": "Back"
+        },
+        "spread": false,
+        "alias": "Button",
+        "library": "ui-toolkit",
+        "version": "0.0.0"
+      },
+      {
+        "name": "Button",
+        "props": {
+          "theme": "primary",
+          "onClick": { "type": "Identifier", "value": "handleClickHomeButton" },
+          "children": "Home"
+        },
+        "spread": false,
+        "alias": "Button",
+        "library": "ui-toolkit",
+        "version": "0.0.0"
+      },
+      {
+        "name": "Button",
+        "props": {
+          "style": {
+            "type": "ObjectExpression",
+            "value": "{ background: 'blue' }"
+          },
+          "children": { "type": "Identifier", "value": "children" }
+        },
+        "spread": false,
+        "alias": "Button",
+        "library": "ui-toolkit",
+        "version": "0.0.0"
+      }
+    ]
+  }
+]
