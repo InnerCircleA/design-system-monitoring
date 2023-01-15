@@ -8,7 +8,7 @@ const escodegen = require('escodegen');
 const checkJSXCallExpression = (expression) =>
   expression.type === 'CallExpression' &&
   expression.callee?.type === 'Identifier' &&
-  expression.callee.name === '_jsx';
+  (expression.callee.name === '_jsx' || expression.callee.name === '_jsxDEV'); // TODO: divide parsing for DEV mode
 
 /**
  * AST 분석을 통해 React Element를 생성하는 함수 CallExpression을 모두 찾아서 호출 정보 반환
