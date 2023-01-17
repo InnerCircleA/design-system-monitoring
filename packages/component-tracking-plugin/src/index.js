@@ -73,6 +73,8 @@ class ComponentTrackingWebpackPlugin {
                 usedComponentInfos
               );
             }
+
+            this.done = true; // AST 분석을 해야만 정보를 추출했다고 볼 수 있음. TODO: Cache 처리될떄를 결과만들때 예외처리해야함.
           });
         });
     });

@@ -2,7 +2,11 @@
   "name": "mono-repo",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "build": "nx run-many --target=build",
+    "postbuild": "nx build:tracking ui-toolkit",
+    "storybook": "nx storybook ui-toolkit"
+  },
   "private": true,
   "dependencies": {
     "react": "^18.2.0",
