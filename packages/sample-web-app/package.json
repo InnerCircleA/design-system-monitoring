@@ -27,7 +27,7 @@
     "test": "react-app-rewired test",
     "eject": "react-scripts eject",
     "lint": "eslint ./src/ --ext .tsx",
-    "storybook": "start-storybook -p 6006 -s public",
+    "storybook": "node ./src/lib/generate-stories.js && start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook -s public"
   },
   "eslintConfig": {

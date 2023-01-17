@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
@@ -19,8 +20,9 @@ const Template: ComponentStory<typeof MainPage> = (args) => <MainPage {...args} 
 export const MainPageView = Template.bind({});
 
 const [data] = trackingData.filter(page => page.path === "MainPage.tsx")
-data.components
 
 MainPageView.args = {
   ...data.components
-};
+    };
+
+  
