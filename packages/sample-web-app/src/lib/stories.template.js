@@ -31,13 +31,13 @@ ${pagename}View.args = {
   `
 }
 
-const generate = (pagename, params) => {
+const generate = (pagename) => {
   const generateTargetDirectory = `${__dirname}/../stories/pages/`
   if (!fs.existsSync(generateTargetDirectory)) {
     fs.mkdirSync(generateTargetDirectory, { recursive: true });
   }
   const file = fs.writeFileSync(`${__dirname}/../stories/pages/${pagename}.stories.tsx`, content(pagename))
-  console.log(params)
+  console.log(`Done generating ${pagename}.stories.tsx`)
 }
 
 module.exports = {
