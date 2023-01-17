@@ -7,6 +7,7 @@ import styled from "@emotion/styled";
 page();
 
 const MainPage: React.FC = () => {
+
     const navigate = useNavigate();
     const handleClickDetailButton = () => {
         navigate("/detail")
