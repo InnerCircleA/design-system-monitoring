@@ -26,19 +26,19 @@ const convertPropsToText = (
 const ComponentUsecase: React.FC<{ componentTracking: ComponentTracking }> = ({
   componentTracking,
 }) => {
-  const componentPropsText = Object.entries(componentTracking.props)
+  const propsTexts = Object.entries(componentTracking.props)
     .filter(([key]) => key !== 'children')
-    .map(([key, value]) => convertPropsToText(key, value))
-    .join(' ');
-  const spreadPropsText = componentTracking.spread ? ' { ...somthing }' : '';
+    .map(([key, value]) => convertPropsToText(key, value));
 
-  const propsText = `${componentPropsText}${spreadPropsText}`;
+  if (componentTracking.spread) propsTexts.push('{ ...somthing }');
+
+  const propsText = propsTexts.join(' ');
   const componentName = componentTracking.alias;
   const childrenText = convertPropsValueToText(
     componentTracking.props.children
   );
 
-  const componentText = `<${componentName} ${propsText}>${childrenText}</${componentName}>`;
+  const componentText = `<${componentName} ${propsText}>{${childrenText}}</${componentName}>`;
 
   return (
     <div style={{ marginBottom: 10 }}>
