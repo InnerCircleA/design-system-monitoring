@@ -18,6 +18,7 @@
     |-- sample-web
          |-- tracking.json
     |-- ui-toolkit
+         |-- total-tracking.json // merged all tracking.json in each projects
 ```
 
 - `anotation`: project repository에서 모듈에 대한 정보를 번들러에서 전달하기 위한 Anotation 모음 패키지.(ex. `page()`)
