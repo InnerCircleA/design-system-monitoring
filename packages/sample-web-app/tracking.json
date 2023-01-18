@@ -2,7 +2,7 @@
   {
     "project": "sample-web-app@0.1.0",
     "path": "MainPage.tsx",
-    "updated": "2023-01-18T08:23:42.747Z",
+    "updated": "2023-01-18T14:05:27.511Z",
     "components": [
       {
         "name": "Button",
@@ -24,7 +24,7 @@
   {
     "project": "sample-web-app@0.1.0",
     "path": "DetailPage.tsx",
-    "updated": "2023-01-18T08:23:42.756Z",
+    "updated": "2023-01-18T14:05:27.515Z",
     "components": [
       {
         "name": "Button",
