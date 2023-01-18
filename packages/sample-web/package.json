@@ -6,16 +6,23 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "lint-staged": "lint-staged"
   },
   "dependencies": {
+    "component-tracking-anotation": "*",
     "next": "^13.1.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "ui-toolkit": "*",
-    "component-tracking-anotation": "*"
+    "ui-toolkit": "*"
   },
   "devDependencies": {
-    "component-tracking-plugin": "*"
+    "component-tracking-plugin": "*",
+    "lint-staged": "^13.1.0"
+  },
+  "lint-staged": {
+    "*.{json,md,html,js,jsx,ts,tsx}": [
+      "prettier --write"
+    ]
   }
 }

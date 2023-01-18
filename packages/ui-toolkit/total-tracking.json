@@ -39,8 +39,30 @@
   },
   {
     "project": "sample-web-app@0.1.0",
+    "path": "MainPage.tsx",
+    "updated": "2023-01-18T08:23:42.747Z",
+    "components": [
+      {
+        "name": "Button",
+        "props": {
+          "theme": "primary",
+          "onClick": {
+            "type": "Identifier",
+            "value": "handleClickDetailButton"
+          },
+          "children": "Detail"
+        },
+        "spread": false,
+        "alias": "Button",
+        "library": "ui-toolkit",
+        "version": "0.0.0"
+      }
+    ]
+  },
+  {
+    "project": "sample-web-app@0.1.0",
     "path": "DetailPage.tsx",
-    "updated": "2023-01-17T06:39:26.352Z",
+    "updated": "2023-01-18T08:23:42.756Z",
     "components": [
       {
         "name": "Button",
@@ -82,28 +104,6 @@
             "value": "{ background: 'blue' }"
           },
           "children": { "type": "Identifier", "value": "children" }
-        },
-        "spread": false,
-        "alias": "Button",
-        "library": "ui-toolkit",
-        "version": "0.0.0"
-      }
-    ]
-  },
-  {
-    "project": "sample-web-app@0.1.0",
-    "path": "MainPage.tsx",
-    "updated": "2023-01-17T06:39:26.357Z",
-    "components": [
-      {
-        "name": "Button",
-        "props": {
-          "theme": "primary",
-          "onClick": {
-            "type": "Identifier",
-            "value": "handleClickDetailButton"
-          },
-          "children": "Detail"
         },
         "spread": false,
         "alias": "Button",

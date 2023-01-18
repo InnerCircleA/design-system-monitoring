@@ -25,7 +25,8 @@
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
     "test": "react-app-rewired test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint-staged": "lint-staged"
   },
   "eslintConfig": {
     "extends": [
@@ -47,6 +48,12 @@
   },
   "devDependencies": {
     "component-tracking-plugin": "*",
+    "lint-staged": "^13.1.0",
     "react-app-rewired": "^2.2.1"
+  },
+  "lint-staged": {
+    "*.{json,md,html,js,jsx,ts,tsx}": [
+      "prettier --write"
+    ]
   }
 }

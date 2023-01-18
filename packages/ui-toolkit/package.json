@@ -13,7 +13,8 @@
     "watch": "rollup -cw",
     "build": "rollup -c && tsc --emitDeclarationOnly",
     "build:types": "tsc --emitDeclarationOnly",
-    "build:tracking": "node ./scripts/harvest.js"
+    "build:tracking": "node ./scripts/harvest.js",
+    "lint-staged": "lint-staged"
   },
   "devDependencies": {
     "@babel/core": "^7.20.12",
@@ -38,6 +39,7 @@
     "@types/react": "^18.0.26",
     "@types/react-dom": "^18.0.10",
     "babel-loader": "^8.3.0",
+    "lint-staged": "^13.1.0",
     "micromatch": "^4.0.5",
     "prismjs": "^1.29.0",
     "rollup-plugin-peer-deps-external": "^2.2.4",
@@ -48,5 +50,10 @@
     "@emotion/react": "^11.10.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
+  },
+  "lint-staged": {
+    "*.{json,md,html,js,jsx,ts,tsx}": [
+      "prettier --write"
+    ]
   }
 }

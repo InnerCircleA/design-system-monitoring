@@ -5,7 +5,8 @@
   "scripts": {
     "build": "nx run-many --target=build",
     "postbuild": "nx build:tracking ui-toolkit",
-    "storybook": "nx storybook ui-toolkit"
+    "storybook": "nx storybook ui-toolkit",
+    "lint-staged": "nx run-many --target=lint-staged"
   },
   "private": true,
   "dependencies": {
