@@ -40,9 +40,9 @@ NX Command를 root `package.json`에 전체 프로젝트의 빌드를 위해 몇
 
 - 전체 package들의 `build`를 실행해서 모든 프러덕트 프로젝트들의 webpack 번들링을 수행합니다. 
 
-`component-tracking-webpack-plugin`에 의해 컴포넌트 사용 정보인 `tracking.json`이 각 프로젝트 root 경로에 생성됩니다.
+[컴포넌트 정보를 추출하는 웹팩 플러그인](https://github.com/InnerCircleA/design-system-monitoring/tree/main/packages/component-tracking-plugin)을 이용해서 컴포넌트 사용정보(`tracking.json`)가 각각의 프로젝트 경로에 생성됩니다.
 
-- 빌드 후 실행될 `postbuild `는 `ui-toolkit` 패키지에 위 과정에서 생성된 `tracking.json`들을 합친 하나의 `total-tracking.json`을 생성하게됩니다.
+그리고 빌드 후 실행될 `postbuild` 스크립트는 `ui-toolkit` 패키지에 위 과정에서 생성된 `tracking.json`들을 합친 하나의 `total-tracking.json`이 생성됩니다.
 
 ```bash
 $ cd .
