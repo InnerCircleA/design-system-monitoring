@@ -1,1 +1,115 @@
-[{"project":"sample-web@0.1.0","path":"main.tsx","updated":"2023-01-17T06:39:28.003Z","components":[{"name":"Button","props":{"theme":"primary","children":"Hello"},"spread":false,"alias":"Button","library":"ui-toolkit","version":"0.0.0"},{"name":"Button","props":{"theme":"secondary","style":{"type":"ObjectExpression","value":"{\n    background: '#ffffff',\n    fontSize: 24,\n    height: 50,\n    marginTop: 12,\n    marginBottom: 12\n}"},"children":"Custom Style"},"spread":false,"alias":"Button","library":"ui-toolkit","version":"0.0.0"},{"name":"Button","props":{"children":"TEST"},"spread":true,"alias":"Button","library":"ui-toolkit","version":"0.0.0"}]},{"project":"sample-web-app@0.1.0","path":"DetailPage.tsx","updated":"2023-01-17T06:39:26.352Z","components":[{"name":"Button","props":{"theme":"primary","children":"Good"},"spread":true,"alias":"Button","library":"ui-toolkit","version":"0.0.0"},{"name":"Button","props":{"theme":"secondary","onClick":{"type":"Identifier","value":"handleClickBackButton"},"children":"Back"},"spread":false,"alias":"Button","library":"ui-toolkit","version":"0.0.0"},{"name":"Button","props":{"theme":"primary","onClick":{"type":"Identifier","value":"handleClickHomeButton"},"children":"Home"},"spread":false,"alias":"Button","library":"ui-toolkit","version":"0.0.0"},{"name":"Button","props":{"style":{"type":"ObjectExpression","value":"{ background: 'blue' }"},"children":{"type":"Identifier","value":"children"}},"spread":false,"alias":"Button","library":"ui-toolkit","version":"0.0.0"}]},{"project":"sample-web-app@0.1.0","path":"MainPage.tsx","updated":"2023-01-17T06:39:26.357Z","components":[{"name":"Button","props":{"theme":"primary","onClick":{"type":"Identifier","value":"handleClickDetailButton"},"children":"Detail"},"spread":false,"alias":"Button","library":"ui-toolkit","version":"0.0.0"}]}]
+[
+  {
+    "project": "sample-web@0.1.0",
+    "path": "main.tsx",
+    "updated": "2023-01-17T06:39:28.003Z",
+    "components": [
+      {
+        "name": "Button",
+        "props": { "theme": "primary", "children": "Hello" },
+        "spread": false,
+        "alias": "Button",
+        "library": "ui-toolkit",
+        "version": "0.0.0"
+      },
+      {
+        "name": "Button",
+        "props": {
+          "theme": "secondary",
+          "style": {
+            "type": "ObjectExpression",
+            "value": "{\n    background: '#ffffff',\n    fontSize: 24,\n    height: 50,\n    marginTop: 12,\n    marginBottom: 12\n}"
+          },
+          "children": "Custom Style"
+        },
+        "spread": false,
+        "alias": "Button",
+        "library": "ui-toolkit",
+        "version": "0.0.0"
+      },
+      {
+        "name": "Button",
+        "props": { "children": "TEST" },
+        "spread": true,
+        "alias": "Button",
+        "library": "ui-toolkit",
+        "version": "0.0.0"
+      }
+    ]
+  },
+  {
+    "project": "sample-web-app@0.1.0",
+    "path": "DetailPage.tsx",
+    "updated": "2023-01-17T06:39:26.352Z",
+    "components": [
+      {
+        "name": "Button",
+        "props": { "theme": "primary", "children": "Good" },
+        "spread": true,
+        "alias": "Button",
+        "library": "ui-toolkit",
+        "version": "0.0.0"
+      },
+      {
+        "name": "Button",
+        "props": {
+          "theme": "secondary",
+          "onClick": { "type": "Identifier", "value": "handleClickBackButton" },
+          "children": "Back"
+        },
+        "spread": false,
+        "alias": "Button",
+        "library": "ui-toolkit",
+        "version": "0.0.0"
+      },
+      {
+        "name": "Button",
+        "props": {
+          "theme": "primary",
+          "onClick": { "type": "Identifier", "value": "handleClickHomeButton" },
+          "children": "Home"
+        },
+        "spread": false,
+        "alias": "Button",
+        "library": "ui-toolkit",
+        "version": "0.0.0"
+      },
+      {
+        "name": "Button",
+        "props": {
+          "style": {
+            "type": "ObjectExpression",
+            "value": "{ background: 'blue' }"
+          },
+          "children": { "type": "Identifier", "value": "children" }
+        },
+        "spread": false,
+        "alias": "Button",
+        "library": "ui-toolkit",
+        "version": "0.0.0"
+      }
+    ]
+  },
+  {
+    "project": "sample-web-app@0.1.0",
+    "path": "MainPage.tsx",
+    "updated": "2023-01-17T06:39:26.357Z",
+    "components": [
+      {
+        "name": "Button",
+        "props": {
+          "theme": "primary",
+          "onClick": {
+            "type": "Identifier",
+            "value": "handleClickDetailButton"
+          },
+          "children": "Detail"
+        },
+        "spread": false,
+        "alias": "Button",
+        "library": "ui-toolkit",
+        "version": "0.0.0"
+      }
+    ]
+  }
+]
